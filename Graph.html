@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Scatter Chart</title>
+    <script src="chartjs/dist/Chart.bundle.js"></script>
+	<script src="jquery-3.1.1.min.js"></script>
+	<script>
+			var dataPoints;
+			var bgcolors = [];
+			//var brdrcolors = [];
+			$.ajax({
+			  url: "graph.json",
+			  dataType: "json",
+			  async: false,
+			  success: function(data) {
+				dataPoints = data.data;
+				//alert(dataPoints);
+				$.each(dataPoints, function(i, field){
+					bgcolors.push(field.color);
+					//brdrcolors.push(color(window.chartColors.field.blue).alpha(0.2).rgbString());
+				});
+			  }
+			});
+	</script>
+    <style>
+    canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <button id="reloadData">Reload Data</button>
+    <script>
+
+        var color = Chart.helpers.color;
+        var scatterChartData = {
+            datasets: [{
+				pointBackgroundColor: bgcolors,
+                data: dataPoints,
+            }]
+        };
+        window.onload = function() {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myScatter = Chart.Scatter(ctx, {
+                data: scatterChartData,
+                options: {
+					tooltips: {
+					  callbacks: {
+						label: function(tooltipItem, data) {
+						  var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || 'Other';
+						  var label = data.labels[tooltipItem.index];
+						  return data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].name;
+						}
+					  }
+					},
+					showLines: false,
+                    title: {
+                        display: true,
+                        text: 'Scatter Chart'
+                    },
+					legend:{
+					display: false,
+					}
+                }
+            });
+        };
+        document.getElementById('reloadData').addEventListener('click', function() {
+            location.reload();
+        });
+    </script>
+</body>
+
+</html>
