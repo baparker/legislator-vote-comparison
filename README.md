@@ -5,9 +5,9 @@ Instructions
 <to do>
 
 Authors
-Brittany Parker - algorithm
-Michelle Tyler - data gathering & parsing
-Kevin Lui - plotting data
+Brittany Parker - algorithm.
+Michelle Tyler - data gathering & parsing.
+Kevin Lui - plotting data.
 
 Acknowledgments
 Code for the algorithm was used from the book, Programming Collective Intelligence: Building Smart Web 2.0 Applications. 
